@@ -42,14 +42,14 @@ public final class LambdaFilter extends JFrame {
          * Commands.
          */
         IDENTITY("No modifications", Function.identity()),
-        LOWCASE("Chars to lowercase",s->s.toLowerCase()),
-        LINES("Number of lines",s->String.valueOf(s.lines().count())),
-        ORDER("Alphabetical Order",st->Arrays.stream(st.split("[\s\n.,]+"))
-                                            .sorted(String::compareTo)
-                                            .reduce((k,q)->k+" "+q)
+        LOWCASE("Chars to lowercase", String :: toLowerCase),
+        LINES("Number of lines", s -> String.valueOf(s.lines().count())),
+        ORDER("Alphabetical Order", st -> Arrays.stream(st.split("[\s\n.,]+"))
+                                            .sorted(String :: compareTo)
+                                            .reduce((k, q) -> k + " " + q)
                                             .get()),
-        COUNT("Words Each", sa->Arrays.stream(sa.split("[\s\n.,]+"))
-                                     .collect(Collectors.groupingBy(str->str,Collectors.counting()))
+        COUNT("Words Each", sa -> Arrays.stream(sa.split("[\s\n.,]+"))
+                                     .collect(Collectors.groupingBy(str -> str, Collectors.counting()))
                                      .toString());
         private final String commandName;
         private final Function<String, String> fun;
@@ -71,7 +71,7 @@ public final class LambdaFilter extends JFrame {
 
     private LambdaFilter() {
         super("Lambda filter GUI");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         final JPanel panel1 = new JPanel();
         final LayoutManager layout = new BorderLayout();
         panel1.setLayout(layout);
