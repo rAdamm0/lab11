@@ -33,7 +33,7 @@ public final class MusicGroupImpl implements MusicGroup {
     @Override
     public Stream<String> orderedSongNames() {
         Set<String> temp = new HashSet<>();
-        songs.forEach((arg0)->{
+        songs.forEach((arg0) -> {
             temp.add(arg0.getSongName());
         });
 
@@ -49,12 +49,12 @@ public final class MusicGroupImpl implements MusicGroup {
     @Override
     public Stream<String> albumInYear(final int year) {
         return albums.keySet().stream()
-        .filter(i ->albums.get(i)==year);
+        .filter(i  -> albums.get(i) == year);
     }
 
     @Override
     public int countSongs(final String albumName) {
-        return this.songs.stream().filter(e -> e.getAlbumName().equals(Optional.ofNullable(albumName)))
+        return this.songs.stream().filter(e  ->  e.getAlbumName().equals(Optional.ofNullable(albumName)))
         .toArray()
         .length;
     }
@@ -66,24 +66,24 @@ public final class MusicGroupImpl implements MusicGroup {
 
     @Override
     public OptionalDouble averageDurationOfSongs(final String albumName) {
-        return  this.songs.stream().filter(e -> e.getAlbumName().equals(Optional.ofNullable(albumName)))
-        .mapToDouble(Song::getDuration)
+        return  this.songs.stream().filter(e  ->  e.getAlbumName().equals(Optional.ofNullable(albumName)))
+        .mapToDouble(Song :: getDuration)
         .average();
     }
 
     @Override
     public Optional<String> longestSong() {
-        return Optional.of(this.songs.stream().sorted((a,b)->a.getDuration()==b.getDuration() ? 0 : a.getDuration()>b.getDuration() ? -1 : 1)
+        return Optional.of(this.songs.stream().sorted((a,b) -> a.getDuration() == b.getDuration() ? 0 : a.getDuration() > b.getDuration() ? -1 : 1)
         .findFirst().get()
         .getSongName());
     }
 
     @Override
     public Optional<String> longestAlbum() {
-        return songs.stream().filter(f->f.getAlbumName().isPresent())
+        return songs.stream().filter(f -> f.getAlbumName().isPresent())
         .collect(Collectors.groupingBy(Song::getAlbumName,Collectors.summarizingDouble(Song::getDuration))).entrySet()
         .stream()
-        .sorted((a,b)->a.getValue().getSum()==b.getValue().getSum() ? 0 : a.getValue().getSum()<b.getValue().getSum() ? 1 : -1)
+        .sorted((a,b) -> a.getValue().getSum() == b.getValue().getSum() ? 0 : a.getValue().getSum() < b.getValue().getSum() ? 1 : -1)
         .findFirst()
         .get().getKey();
     }
